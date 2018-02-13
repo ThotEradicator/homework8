@@ -1,0 +1,544 @@
+<DOCTYPE! html>
+    <html onclick="playAudio()">
+        <head>
+            <title>Ho-Oh's anti-prestige forum</title>
+            <meta charset=utf-8>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            <link href="https://fonts.googleapis.com/css?family=Leckerli+One|Roboto" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            
+            <style>
+            
+                body {
+                    background-image: url(pics/background/bg1.gif);
+                    background-size: cover;
+                }
+                
+                .container {
+                }
+                
+                header {
+                    text-align:center;
+                    background-image: url(pics/header/banner1.png);
+                    background-size:cover;
+                    height: 128px;
+                    animation: links 10s infinite;
+                    animation-direction: alternate-reverse;
+                }
+                
+                @keyframes links {
+                    0% {left: 0px; right: 0px;}
+                    25% {left: 100px; right: 0px;}
+                    50% {left: 0px; right: 0px;}
+                    75% {left: 0px; right: 100px;}
+                    100% {left: 0px; right: 0;}
+                    
+                }
+                
+                header > h1 {
+                    font-size: 35px;
+                    letter-spacing: -6;
+                }
+                
+                header > p {
+                    color:white;
+                    text-decoration-style: wavy;
+                }
+
+                
+                /*navigatie*/
+                .nav {
+                    background-color: crimson;
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+                    overflow:hidden;
+                }
+                
+                .navos {
+                    float: left;
+                }
+                
+                .nav-a {
+                    padding: 14px 16px;
+                    color:whitesmoke;
+                    text-align: center;
+                    text-decoration: none;
+                }
+                
+                .nav-a:hover {
+                    margin: inherit;
+                    text-decoration: none;
+                    color:azure;
+                    background-color:cornflowerblue;
+                }
+                
+                .nav-search {
+                    float: right;
+                }
+                
+                .navbar {
+                    width: 100%;
+                }
+                
+                input[type=text] {
+                    width: 130px;
+                    box-sizing: border-box;
+                    border: 2px solid #ccc;
+                    border-radius: 4px;
+                    font-size: 16px;
+                    color:whitesmoke;
+                    background-color: skyblue;
+                    background-image: url('pics/search/go.gif');
+                    background-position:top; 
+                    background-repeat: no-repeat;
+                    padding: 12px 20px 12px 40px;
+                    -webkit-transition: width 0.4s ease-in-out;
+                    transition: width 0.4s ease-in-out;
+                }
+
+                input[type=text]:focus {
+                    width: 100%;
+                }
+
+                
+                .rightos {
+                    animation: rechts 10s infinite;
+                    animation-direction: alternate-reverse;
+                }
+                
+                @keyframes rechts {
+                    0% {left: 0px; right: 0px;}
+                    25% {left: 0px; right: 100px;}
+                    50% {left: 0px; right: 0px}
+                    75% {left: 100px; right: 0px}
+                    100% {left: 0px; right: 0px}
+                    
+                }
+
+                
+                /*regenboog effect*/
+                .a {
+                    width: 100px;
+                    height: 100px;
+                    
+                    -webkit-animation: myfirst 5s 2; /* Safari 4.0 - 8.0 */
+                    -webkit-animation-direction: alternate; /* Safari 4.0 - 8.0 */
+                    animation: myfirst 1s infinite;
+                    animation-direction: alternate-reverse;
+
+                }
+
+                @keyframes myfirst {
+                    0%   {color: #ff0000;}
+                    12.5%{color: #ff8000;}
+                    25%  {color: #ffff00;}
+                    37.5%{color: #40ff00;}
+                    50%  {color: #00ffff;}
+                    62.5%{color: #0080ff;}
+                    75%  {color: #8000ff;}
+                    87.5%{color: #ff00ff;}
+                    100% {color: #ff0080;}
+                }
+
+                .b {
+                    width: 100px;
+                    height: 100px;
+                    
+                    -webkit-animation: mysecond 5s 2; /* Safari 4.0 - 8.0 */
+                    -webkit-animation-direction: alternate; /* Safari 4.0 - 8.0 */
+                    animation: mysecond 1s infinite;
+                    animation-direction: alternate-reverse;
+
+                }
+
+                @keyframes mysecond {
+                    0%   {color: #ff0080;}
+                    12.5%{color: #ff0000;}
+                    25%  {color: #ff8000;}
+                    37.5%{color: #ffff00;}
+                    50%  {color: #40ff00;}
+                    62.5%{color: #00ffff;}
+                    75%  {color: #0080ff;}
+                    87.5%{color: #8000ff;}
+                    100% {color: #ff00ff;}
+                }
+
+                .c {
+                    width: 100px;
+                    height: 100px;
+                   
+                    -webkit-animation: mythird 5s 2; /* Safari 4.0 - 8.0 */
+                    -webkit-animation-direction: alternate; /* Safari 4.0 - 8.0 */
+                    animation: mythird 1s infinite;
+                    animation-direction: alternate-reverse;
+
+                }
+
+                @keyframes mythird {
+                    0%   {color: #ff00ff;}
+                    12.5%{color: #ff0080;}
+                    25%  {color: #ff0000;}
+                    37.5%{color: #ff8000;}
+                    50%  {color: #ffff00;}
+                    62.5%{color: #40ff00;}
+                    75%  {color: #00ffff;}
+                    87.5%{color: #0080ff;}
+                    100% {color: #8000ff;}
+                }
+
+                .d {
+                    width: 100px;
+                    height: 100px;
+                   
+                    -webkit-animation: myfourth 5s 2; /* Safari 4.0 - 8.0 */
+                    -webkit-animation-direction: alternate; /* Safari 4.0 - 8.0 */
+                    animation: myfourth 1s infinite;
+                    animation-direction: alternate-reverse;
+
+                }
+
+                @keyframes myfourth {
+                    0%   {color: #8000ff;}
+                    12.5%{color: #ff00ff;}
+                    25%  {color: #ff0080;}
+                    37.5%{color: #ff0000;}
+                    50%  {color: #ff8000;}
+                    62.5%{color: #ffff00;}
+                    75%  {color: #40ff00;}
+                    87.5%{color: #00ffff;}
+                    100% {color: #0080ff;}
+                }
+
+                .e {
+                    width: 100px;
+                    height: 100px;
+                  
+                    -webkit-animation: myfifth 5s 2; /* Safari 4.0 - 8.0 */
+                    -webkit-animation-direction: alternate; /* Safari 4.0 - 8.0 */
+                    animation: myfifth 1s infinite;
+                    animation-direction: alternate-reverse;
+
+                }
+
+                @keyframes myfifth {
+                    0%   {color: #0080ff;}
+                    12.5%{color: #8000ff;}
+                    25%  {color: #ff00ff;}
+                    37.5%{color: #ff0080;}
+                    50%  {color: #ff0000;}
+                    62.5%{color: #ff8000;}
+                    75%  {color: #ffff00;}
+                    87.5%{color: #40ff00;}
+                    100% {color: #00ffff;}
+                }
+                
+                .f {
+                    width: 100px;
+                    height: 100px;
+                    
+                    -webkit-animation: mysixth 5s 2; /* Safari 4.0 - 8.0 */
+                    -webkit-animation-direction: alternate; /* Safari 4.0 - 8.0 */
+                    animation: myfifth 1s infinite;
+                    animation-direction: alternate-reverse;
+
+                }
+                
+                @keyframes mysixth {
+                    0%   {color: #00ffff;}
+                    12.5%{color: #0080ff;}
+                    25%  {color: #8000ff;}
+                    37.5%{color: #ff00ff;}
+                    50%  {color: #ff0080;}
+                    62.5%{color: #ff0000;}
+                    75%  {color: #ff8000;}
+                    87.5%{color: #ffff00;}
+                    100% {color: #40ff00;}
+                }
+                
+                .g {
+                    width: 100px;
+                    height: 100px;
+                    
+                    -webkit-animation: myseventh 5s 2; /* Safari 4.0 - 8.0 */
+                    -webkit-animation-direction: alternate; /* Safari 4.0 - 8.0 */
+                    animation: myfourth 1s infinite;
+                    animation-direction: alternate-reverse;
+
+                }
+
+                @keyframes myseventh {
+                    0%   {color: #40ff00;}
+                    12.5%{color: #00ffff;}
+                    25%  {color: #0080ff;}
+                    37.5%{color: #8000ff;}
+                    50%  {color: #ff00ff;}
+                    62.5%{color: #ff0080;}
+                    75%  {color: #ff0000;}
+                    87.5%{color: #ff8000;}
+                    100% {color: #ffff00;}
+                }
+
+                .h {
+                    width: 100px;
+                    height: 100px;
+                   
+                    -webkit-animation: myeigth 5s 2; /* Safari 4.0 - 8.0 */
+                    -webkit-animation-direction: alternate; /* Safari 4.0 - 8.0 */
+                    animation: myfifth 1s infinite;
+                    animation-direction: alternate-reverse;
+
+                }
+
+                @keyframes myeigth {
+                    0%   {color: #ffff00;}
+                    12.5%{color: #40ff00;}
+                    25%  {color: #00ffff;}
+                    37.5%{color: #0080ff;}
+                    50%  {color: #8000ff;}
+                    62.5%{color: #ff00ff;}
+                    75%  {color: #ff0080;}
+                    87.5%{color: #ff0000;}
+                    100% {color: #ff8000;}
+                }
+                
+                .i {
+                    width: 100px;
+                    height: 100px;
+                   
+                    -webkit-animation: mynineth 5s 2; /* Safari 4.0 - 8.0 */
+                    -webkit-animation-direction: alternate; /* Safari 4.0 - 8.0 */
+                    animation: myfifth 1s infinite;
+                    animation-direction: alternate-reverse;
+
+                }
+                
+                @keyframes mynineth {
+                    0%   {color: #ff8000;}
+                    12.5%{color: #ffff00;}
+                    25%  {color: #40ff00;}
+                    37.5%{color: #00ffff;}
+                    50%  {color: #0080ff;}
+                    62.5%{color: #8000ff;}
+                    75%  {color: #ff00ff;}
+                    87.5%{color: #ff0080;}
+                    100% {color: #ff0000;}
+                }
+
+                /*eind regenboog effect*/
+                
+                h1, h2, h3, h4, h5, h6 {
+                    font-family: 'Leckerli One', cursive;
+                }
+                
+                p, li {
+                    font-family: 'Roboto', sans-serif;
+                }
+                
+
+                /* scroll naar de top functie*/
+                #sr388 {
+                    display: none;
+                    position:fixed;
+                    bottom: 20px;
+                    right: 30px;
+                    z-index:69;
+                    font-size:18px;
+                    border:none;
+                    outline:none;
+                    background-image:url(pics/search/Ho-Oh_XY.gif);
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-color: transparent;
+                    color:deeppink;
+                    cursor:pointer;
+                    padding:15px;
+                    border-radius:4px;
+                }
+                
+                /* #sr388:hover {
+                    background-image: url(pics/search/hooh.gif)
+                } */
+                
+                /*social media*/
+                .fa-facebook {
+              background: #3B5998;
+              color: white;
+            text-decoration: none;
+        
+            }
+
+            .fa-twitter {
+              background: #55ACEE;
+              color: white;
+            text-decoration: none;
+            }
+
+            .fa-google {
+              background: #dd4b39;
+              color: white;
+            text-decoration: none;
+            }
+
+            .fa-whatsapp {
+              background: limegreen;
+              color: white;
+            text-decoration: none;
+            }
+
+            .fa-youtube {
+              background: #b00b55;
+              color: white;
+            text-decoration: none;
+            }
+
+            .fa-instagram {
+              background: #125688;
+              color: white;
+            text-decoration: none;
+            } 
+            
+                
+            </style>
+            
+        </head>
+        <body>
+            <audio id="click">
+                <source src="audio/acties/250Cry.wav" type="audio/mpeg">
+            </audio>
+            <audio autoplay loop>
+                <source src="audio/bg/Bg.mp3">
+            </audio>
+            
+            <button onclick="topFunction(), playAudio" id="sr388" title="Go to top">&25B2;</button>
+            
+            <header>
+                <h1>
+                    <strong class="a">H</strong>
+                    <strong class="b">o</strong>
+                    <strong class="c">-</strong>
+                    <strong class="d">O</strong>
+                    <strong class="e">h</strong>
+                    <strong class="f">'</strong>
+                    <strong class="g">s </strong>
+                    <strong class="h">a</strong>
+                    <strong class="i">n</strong>
+                    <strong class="a">t</strong>
+                    <strong class="b">i</strong>
+                    <strong class="c">-</strong>
+                    <strong class="d">p</strong>
+                    <strong class="e">r</strong>
+                    <strong class="f">e</strong>
+                    <strong class="g">s</strong>
+                    <strong class="h">t</strong>
+                    <strong class="i">i</strong>
+                    <strong class="a">g</strong>
+                    <strong class="b">e </strong>
+                    <strong class="c">f</strong>
+                    <strong class="d">o</strong>
+                    <strong class="e">r</strong>
+                    <strong class="f">u</strong>
+                    <strong class="g">m</strong>
+                </h1>
+                <p><strong>want hard werken loont toch nooit</strong></p>
+            </header>
+            
+            <!-- navigatie -->
+                <ul class="nav navbar">
+                    <li><a class="nav-a" onclick="playAudio()" href="index.html" target="_blank">Home</a></li>
+                    <li><a class="nav-a" onclick="playAudio()" href="steundemensheid.html" target="_blank">Forums</a></li>
+                    <li><a class="nav-a" onclick="playAudio()" href="https://www.serebii.net/pokedex-xy/250.shtml" target="_blank">Over Ho-Oh</a></li>
+                    <li><a class="nav-a" onclick="playAudio()" href="#" target="_blank">Ho-Oh's gedachte over Github</a></li>
+                    <li class="nav-search">
+                        <form>
+                            <input type="text" placeholder="zoek..." name="search"><button class="" type="submit" onclick="playAudio()">&hearts;</button>
+                        </form>
+                    </li>
+                </ul>
+            
+            <!-- body -->
+            <br>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6" style="background-color: rgba(10, 10, 10, 0.7); color:ghostwhite; border: solid 10px rgba(10, 10, 10, 0); border-radius: 10px;">
+                    <h2>Wow wat een geweldig forum!</h2>
+                        <p>niet alleen geweldig voor fans van deze vogel die eigenlijk best basic is en z'n moveset is eerlijk gezegd ook wel weinig aan. het enige waarom hij handig is, is dat ie Sacred Ash bij zich heeft, en die is best handig. Maar omdat je er maar 1 krijgt, verliest die ook z'n waarde.</p>
+                        <button onclick="pauseAudio()" title="Pauzeer de musiek voor eeuwig">Pauzeer de muziek voor eeuwig want ik heb geen speelknop geïmplementeerd LOL</button>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-md-offset-8">
+                    </div>
+                    <div class="col-md-4" style="background-color: rgba(255, 255, 255, 0.7); color:black; border: solid 10px rgba(255, 255, 255, 0); border-radius: 10px;">
+                     <h2>Tuut! Goldenrod city!</h2>
+                        <p>Pokemon Gold en Silver worden geprezen om de fantastisch MMORPG elementen die in het spel verwerkt zitten.</p>
+                        <p>Het spel is niet alleen een nutteloze cashgrab op <a href="steundemensheid.html" target="_blank">kinderen die graag met mythische wezens willen spelen</a>, maar ook is het een stuk historie die de hedendaagse Bitcoin-markt heeft geschapen zoals zij nu is.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-8">
+                    </div>
+                    <div class="col-md-4" style="background-color: rgba(125, 29, 238, 0.7); color:springgreen; border: solid 10px rgba(255, 255, 255, 0); border-radius: 10px;">
+                     <h2>'Ja maar ik vind Ho-oh nog wel cool!'</h2>
+                        <p>Nou, dat is geen probleem, deze site specificeert alleen dat Ho-Oh trash is, niet dat hij niet cool is.</p>
+                        <p>Voor degene die Ho-oh graag willen hebben, hier kun je hem vangen!</p>
+                        <br>
+                        <button><a href="battle/start.html">Ho-Oh's Ultimate Human face-off</a></button>
+                    </div>
+                </div>
+            </div>
+            
+            <br>
+            <br>
+            <br>
+            <footer>
+                <ul class="list-inline"> 
+                    <li><a href="HTTPS://www.facebook.com" class="fa fa-facebook"></a></li>
+                    <li><a href="HTTPS://www.twitter.com" class="fa fa-twitter"></a></li>
+                    <li><a href="HTTPS://www.google.com" class="fa fa-google"></a></li>
+                    <li><a href="HTTPS://www.spele.nl" class="fa fa-whatsapp"></a></li>
+                    <li><a href="HTTPS://www.youtube.com.com" class="fa fa-youtube"></a></li>
+                    <li><a href="HTTPS://www.instagram.com" class="fa fa-instagram"></a></li>
+                </ul>
+            </footer>
+            <!-- Audio -->
+        <script>
+            //20px beneden, en de functie komt tevoorschijn//
+            
+            window.onscroll = function() {scrollFunction()};
+            
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 ||
+            document.documentElement.scrollTop > 20) {
+                    document.getElementById("sr388").style.display = "block";
+                } else {
+                    document.getElementById("sr388").style.display = "none";
+                }
+            }
+            
+            //de functionaliteit van de knop//
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+            
+            ////////////////////////////////////
+            var x = document.getElementById("click"); 
+
+            function playAudio() { 
+                x.play(); 
+            } 
+
+            function pauseAudio() { 
+                x.pause(); 
+            } 
+            </script>
+            
+        </body>
+    </html>    
+</DOCTYPE!>

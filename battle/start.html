@@ -1,0 +1,123 @@
+<DOCTYPE! html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title>Battle! Ho-oh!</title>
+            <style>
+            
+                html {
+                    background-image: url(pics/battleback/coverback.png);
+                    background-size: cover;
+                }
+                
+                .foeback {
+                    position: absolute;
+                    left: 65%;
+                    top: 40%;
+                    z-index: -1;
+                    width:35%;
+                    height:auto;
+                    float: right;
+                    overflow: auto;
+                    z-index: -1;
+                }
+                
+                .foe {
+                    position: absolute;
+                    left: 68%;
+                    top: 12%;
+                    z-index: -1;
+                    width:30%;
+                    height:auto;
+                    float: right;
+                    overflow: auto;
+                    z-index: 1;
+                }
+                
+                .foeshadow {
+                    position: absolute;
+                    left: 70%;
+                    top: 49%;
+                    z-index: -1;
+                    width:25%;
+                    height:auto;
+                    float: right;
+                    overflow: auto;
+                    z-index: 0;
+                }
+                
+                .foehealth {
+                    position: absolute;
+                    left: 0%;
+                    top: 20%;
+                    z-index: -1;
+                    width:auto;
+                    height:13%;
+                    float: left;
+                    overflow: auto;
+                    z-index: 0;
+                }
+                
+                @font-face {
+                    font-family: "PokemonDPPt";
+                    src: url(fonts/PokemonDPPt.ttf) format("truetype");
+                }
+                p.battletext { 
+                    font-family: "PokemonDPPt", Verdana, Tahoma;
+                    position: absolute;
+                    left: 1%;
+                    top: 16%;
+                    float: left;
+                    overflow: auto;
+                    font-size: 50px;
+                    z-index: 1;
+                }
+                
+                .levelsize {
+                    letter-spacing: -2;
+                    font-size: 40px;
+                }
+                
+                .notext {
+                    color:transparent;
+                }
+                
+                .messagebox {
+                    position: absolute;
+                    left: 0%;
+                    bottom: 0%;
+                    width:100%;
+                    height: auto;
+                }
+                
+                .commandtext {
+                    font-family: "PokemonDPPt", Verdana, Tahoma;
+                    position:absolute;
+                    left:4.5%;
+                    bottom: 16%;
+                    font-size: 60px;
+                    text-transform: uppercase;
+                }
+                
+            </style>
+                
+            <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+        </head>
+        <body>
+            
+            <audio autoplay loop src="audio/Battle.mp3"></audio>
+
+            <p class="battletext">HO-OH<strong class="notext">............</strong><strong class="levelsize">Lv.45</strong></p>
+
+            <span><img class="foehealth" src="pics/health/battleFoeBoxD.png"></span>
+            <span><img class="foeback" src="pics/battleback/hoohback.png"></span>
+            <span><img class="foeshadow" src="pics/battleback/battleShadow.PNG"></span>
+            <span><img class="messagebox" src="pics/dobox/battleCommand.png"></span>
+            <span>
+            <div class="commandtext">What will Charmander do?</div>
+            </span>
+            <img class="foe" src="pics/battlers/foe.gif">
+            
+        </body>
+    </html>
+</DOCTYPE!>

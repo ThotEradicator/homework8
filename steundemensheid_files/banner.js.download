@@ -1,0 +1,370 @@
+var wrapper, mainTimeline, nFrame, bannerhasEnded, mouseIn;
+var hitObjects, assets;
+var seasons;
+
+function bannerInit() {
+	
+	////////////////////// GLOBAL SETTINGS //////////////////////
+
+	TweenLite.ticker.addEventListener( "tick", doTick );
+	TweenLite.ticker.fps( stageFPS );
+
+	console.log("bannerInit | "+docW+"x"+docH );
+
+	wrapper				=	exportRoot.mc_Wrapper;
+
+	mainTimeline		=	new TimelineLite({ onStart: mainTimelineStart, onComplete: mainTimelineEnd });
+	
+	nFrame				=	0;
+	bannerhasEnded		=	false;
+	mouseIn				=	false;
+
+	border 				=	stage.addChild( new createjs.Shape());
+	borderColor			=	[ "#253482", "#253482"];
+	
+	wiggle				=	true;
+
+	hitObjects			=	[	 ];	
+	rings				=	[];	
+	assets				=	[	wrapper.mc_Tijdelijk, wrapper.mc_Logo, wrapper.mc_Txt_Winter, wrapper.mc_End, wrapper.mc_Packshots ];
+
+	////////////////////// SAVE PROPS //////////////////////
+	
+	for(var i = 0; i < 3; i++ ) {
+		rings.push(  wrapper.mc_End["mc_Ring_"+i] );
+		saveGuides(wrapper.mc_End, "mc_Ring_"+i, 1);
+	};
+
+	saveGuides(wrapper, "mc_Logo", 1);
+	saveGuides(wrapper.mc_Tijdelijk, "mc_Background", 1);
+ 	wrapper.mc_Tijdelijk.mc_Txt_0.alpha = wrapper.mc_Tijdelijk.mc_Txt_1.alpha = 0;
+
+	assets	=	assets.concat( hitObjects, rings );
+
+	saveAllProps([ wrapper.mc_Tijdelijk.mc_Background, wrapper.mc_Tijdelijk.mc_Txt_0, wrapper.mc_Tijdelijk.mc_Txt_1], true);
+	saveAllProps(assets, false);
+	
+	drawBorder(1, borderColor[0]);
+
+	////////////////////// ADD LISTENERS //////////////////////
+
+	wrapper.btn_Hit.addEventListener( "click",	hitBehavior );
+	
+	canvas.addEventListener( "mouseover", canvasBehavior );
+	canvas.addEventListener( "mouseout", canvasBehavior );
+
+	////////////////////// startFrameTracker //////////////////////
+
+	startFrameTracker();
+
+	////////////////////// startHitTestTracker //////////////////////
+
+	for(var i = 0; i < hitObjects.length; i++ )hitObjects[i].beingHit = false;
+
+	////////////////////// START BANNER //////////////////////
+
+	masterTimeline();	
+}
+
+function doTick(evt) {
+	stage.update();
+
+};
+
+///////////////// FrameTracker ////////////////
+
+function startFrameTracker(){ TweenLite.ticker.addEventListener("tick", frameTracker); };
+function stopFrameTracker(){ TweenLite.ticker.removeEventListener("tick", frameTracker); };
+
+function frameTracker(){
+	
+	if( nFrame >= ( 15 * stageFPS )  ) {
+		wiggle = false;
+	}else{
+		nFrame++;
+	}
+}
+
+function mainTimelineStart() {
+	console.log('start! ETA: ',  mainTimeline.duration() / mainTimeline.timeScale()  )
+}
+function mainTimelineEnd() {
+	// console.log("this is the end");
+	stopFrameTracker();
+	bannerhasEnded = true;
+}
+
+///////////////// HIT BEHAVIOR ////////////////
+
+function hitBehavior(evt) {
+	console.log("hitBehavior : " + evt.type );
+	
+	switch(evt.type) {
+		case "click":
+
+			//click
+
+		break;
+	}
+};
+
+///////////////// STAGE BEHAVIOR ////////////////
+
+function canvasBehavior(evt) {
+	console.log("canvasBehavior : " + evt.type );
+	
+	switch(evt.type) {
+		case "mouseover":
+
+			mouseIn = true;
+			onCanvasOver();
+
+		break;
+		case "mouseout":
+
+			mouseIn = false;			
+			onCanvasOut();
+
+		break;
+    }
+};
+
+function onCanvasOver() {
+
+	startHitTestTracker();
+	drawBorder( 1, borderColor[1] );
+
+}
+
+function onCanvasOut() {
+
+	stopHitTestTracker();
+	drawBorder( 1, borderColor[0] );
+
+};
+
+///////////////// HitTestTracker ////////////////
+
+function startHitTestTracker(){	TweenLite.ticker.addEventListener("tick", hitTestTracker); };
+function stopHitTestTracker(){ TweenLite.ticker.removeEventListener("tick", hitTestTracker); };
+
+function hitTestTracker(){
+	for ( var i = 0; i < hitObjects.length; i++ ) {
+			
+		var pt = hitObjects[i].globalToLocal( stage.mouseX, stage.mouseY );
+		var hitResult = hitObjects[i].hitTest( pt.x, pt.y );
+
+		if ( stage.mouseInBounds && hitResult && hitObjects[i].beingHit == false && hitObjects[i].active ) {
+			
+			hitObjects[i].beingHit = true;
+			
+			if( hitObjects[i] == wrapper.mc_Tijdelijk ) {
+
+				ctaBehavior( "mouseover" );
+
+			}
+
+		} else if ( stage.mouseInBounds && !hitResult && hitObjects[i].beingHit == true && hitObjects[i].active ) {
+			
+			hitObjects[i].beingHit = false;
+
+			if( hitObjects[i] == wrapper.mc_Tijdelijk ) {
+
+				ctaBehavior( "mouseout" );
+
+			}
+		};
+	};
+};
+
+///////////////// CTA BEHAVIOR ////////////////
+
+function ctaBehavior(evt) {
+	console.log("ctaBehavior : " + evt );
+
+	switch(evt) {
+		case "mouseover":
+			onCTAOver();
+		break;
+		case "mouseout":
+			onCTAOut();
+		break;
+	}
+};
+
+function onCTAOver() {
+	console.log("over");
+	var zoom = 1.1;
+	TweenLite.to(wrapper.mc_Tijdelijk, .1, { scaleX:wrapper.mc_Tijdelijk.sSX*zoom, scaleY:wrapper.mc_Tijdelijk.sSY*zoom, ease:Power2.easeOut});
+
+};
+
+function onCTAOut() {
+	
+	TweenLite.to(wrapper.mc_Tijdelijk, .1, { scaleX:wrapper.mc_Tijdelijk.sSX, scaleY:wrapper.mc_Tijdelijk.sSY, ease:Power2.easeIn});
+
+};
+
+///////////////////////////////////////////////////
+////////////////////// BANNER SPECIFIC ////////////
+///////////////////////////////////////////////////
+
+
+function drawBorder(weight, color) {
+	
+	border.graphics = new createjs.Graphics().setStrokeStyle(weight).beginStroke( color ).drawRect( 0.5, 0.5, docW-1, docH-1 );
+
+}
+
+///////////////////////////////////////////////////////
+////////////////////// ANIMATION //////////////////////
+///////////////////////////////////////////////////////
+
+function masterTimeline() {
+	
+	mainTimeline.add(scene_0()); 
+	mainTimeline.insert(scene_1(), 0);
+	mainTimeline.insert(scene_2(), .6);
+	mainTimeline.add(scene_3(5,3,1.8),"+=.5");
+		
+
+	mainTimeline.timeScale(1); // put a 4 in there, I dare you ;)	
+}
+
+function wiggleRing(s, xOffset, yOffset){
+	s.graphics._instructions.forEach(function(i){
+		if(typeof i.x !== 'undefined') wiggleProp(i, "x", i.x-xOffset*.5, i.x+xOffset*.5);
+		if(typeof i.y !== 'undefined') wiggleProp(i, "y", i.y-yOffset*.5, i.y+yOffset*.5);
+		if(typeof i.cpx !== 'undefined') wiggleProp(i, "cpx", i.cpx-xOffset*.5, i.cpx+xOffset*.5);
+		if(typeof i.cpy !== 'undefined') wiggleProp(i, "cpy", i.cpy-yOffset*.5, i.cpy+yOffset*.5);
+	
+	});		
+}
+
+function wiggleProp(element, prop, min, max) {
+
+	var duration = randomRange(1.5, 2.5);
+
+	var tweenProps = {
+		ease: Power1.easeInOut,
+	};
+	
+	if(wiggle){
+		tweenProps.onComplete = wiggleProp;
+		tweenProps.onCompleteParams = [element, prop, min, max];
+	}
+	
+	tweenProps[prop] = Math.random() * (max - min) + min;
+
+	TweenLite.to(element, duration, tweenProps);
+}
+
+function scene_0() {
+	return TweenLite.to(wrapper.mc_Curtain, .5, {alpha:0, ease:Power2.easeOut});		
+}
+
+
+function scene_1() {
+	var tl = new TimelineLite({
+		onStart: function() {
+			setVis(	[ wrapper.mc_Logo, wrapper.mc_End ], true );
+			setVis(	rings , true );
+		}
+	});
+
+	var d = 0, v, g;
+	var zoom = .9;
+	
+	var dd = 0;
+	for(var i = 0; i < 3; i++){
+		
+		var ring = wrapper.mc_End["mc_Ring_"+i];
+		tl.insert( TweenLite.from( ring, 1, {alpha:0, scaleX:.25, scaleY:.25, ease: Power2.easeOut }), d+dd );
+		dd += .075;
+	}
+	
+	tl.insert( TweenLite.from( wrapper.mc_Logo, 1.5, { scaleX:wrapper.mc_Logo.sSX*zoom, scaleY:wrapper.mc_Logo.sSY*zoom, ease: Power3.easeOut }), d );
+
+	tl.call( wiggleRing, [wrapper.mc_End.mc_Ring_0.shape, 2, 4], this, d);
+	tl.call( wiggleRing, [wrapper.mc_End.mc_Ring_1.shape, 2, 4], this, d);
+	tl.call( wiggleRing, [wrapper.mc_End.mc_Ring_2.shape, 2, 4], this, d);
+	
+	return tl;			
+};
+
+function scene_2() {
+	var tl = new TimelineLite({
+		onStart: function() {
+			setVis(	[ wrapper.mc_Packshots, wrapper.mc_Tijdelijk, wrapper.mc_Txt_Winter ], true );
+			wrapper.mc_Tijdelijk.mc_Txt_0.alpha = 1;
+		}
+	});
+	var d = 0, v, g;
+	
+	tl.insert( TweenLite.from( wrapper.mc_Packshots.mask, 1.25, {scaleX:0, scaleY:0, ease: Power3.easeInOut }), d );
+	
+	for(var i = 0; i < 3; i++){
+		
+		var ring = wrapper.mc_End["mc_Ring_"+i];
+		var g = ring.guides[0];
+		tl.insert( TweenLite.to( ring, 1, {x:g.sX, y:g.sY, scaleX:g.sSX, scaleY:g.sSY, skewX:g.sSKX, skewY:g.sSKY, rotation:g.sR, overwrite:"none", ease: Power3.easeInOut }), d );
+		d+=.1
+
+	}
+
+	g = wrapper.mc_Logo.guides[0];
+	tl.insert( TweenLite.to( wrapper.mc_Logo, 1, {x:g.sX, y:g.sY, scaleX:g.sSX, scaleY:g.sSY, ease: Power3.easeInOut }), d );
+		
+	d+=.75;	
+	tl.insert( TweenLite.from( wrapper.mc_Txt_Winter, 1, {scaleX:0, scaleY:0,  ease: Back.easeOut }), d );
+
+	tl.insert( TweenLite.from( wrapper.mc_Tijdelijk,1, {x:-100, ease: Power3.easeInOut }), d );
+	
+	return tl;			
+};
+
+function scene_3(setAmount, blinkAmount, interDelay) {
+	var txt0 = wrapper.mc_Tijdelijk.mc_Txt_0;
+	var txt1 = wrapper.mc_Tijdelijk.mc_Txt_1;
+	var bg = wrapper.mc_Tijdelijk.mc_Background;
+	
+	var tl = new TimelineLite({
+		onStart: function() {
+			setVis(	[txt0, txt1], true );
+		}
+	});
+	var d = 0, v, g;
+	var displaceX = 12, v = .15, zoom = .5;
+	
+
+	for(var nSet = 0; nSet < setAmount; nSet++){
+
+		if(nSet%2){
+			tl.insert( TweenLite.to( txt0, v, { x:txt0.sX, alpha:1, scaleX:txt1.sSX, scaleY:txt1.sSY, ease:Power2.easeInOut }), d );
+			tl.insert( TweenLite.to( txt1, v, { x:txt1.sX, alpha:0, scaleX:txt1.sSX*zoom, scaleY:txt1.sSY*zoom, ease:Power2.easeInOut }), d );
+			g = bg;
+			tl.insert( TweenLite.to( bg, v, {x:g.sX, y:g.sY, scaleX:g.sSX, scaleY:g.sSY, ease:Power2.easeInOut }), d );
+		}else{
+			tl.insert( TweenLite.to( txt1, v, { x:txt1.sX, alpha:1, scaleX:txt1.sSX, scaleY:txt1.sSY, ease:Power2.easeInOut }), d );
+			tl.insert( TweenLite.to( txt0, v, { x:txt0.sX, alpha:0, scaleX:txt1.sSX*zoom, scaleY:txt1.sSY*zoom, ease:Power2.easeInOut }), d );
+			g = bg.guides[0];
+			tl.insert( TweenLite.to( bg, v, {x:g.sX, y:g.sY, scaleX:g.sSX, scaleY:g.sSY, ease:Power2.easeInOut }), d );
+		};
+
+		for(var i = 0; i < blinkAmount; i++){
+			tl.insert( TweenLite.to( wrapper.mc_Tijdelijk, v, { x:wrapper.mc_Tijdelijk.sX+displaceX, ease:Power2.easeInOut }), d );
+			d+=v;
+			tl.insert( TweenLite.to( wrapper.mc_Tijdelijk, v, { x:wrapper.mc_Tijdelijk.sX, ease:Power2.easeInOut }), d);
+			d+=v;
+		};
+		d+=interDelay;
+
+		
+	}
+
+	return tl;			
+};
+
+/////////////////////////////////////////////////
+////////////////////// END //////////////////////
+/////////////////////////////////////////////////

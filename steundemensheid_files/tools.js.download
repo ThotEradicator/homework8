@@ -1,0 +1,139 @@
+
+/*
+Pervorm 2016
+*/
+
+var _extends = function(ChildClass, ParentClass)
+{
+	var f = function() { };
+	f.prototype = ParentClass.prototype;
+
+// copy child prototype methods in case there are some defined already
+for(var m in ChildClass.prototype)
+{
+	f.prototype[m] = ChildClass.prototype[m];
+}
+
+ChildClass.prototype = new f();
+ChildClass.prototype.constructor = ChildClass;
+ChildClass.prototype._super = ParentClass.prototype;        
+};
+
+function Vec2(x, y) {
+	this.x = x;
+	this.y = y;
+}
+
+Vec2.prototype.add = function(p){
+	this.x += p.x;
+	this.y += p.y;
+}
+
+Vec2.prototype.distanceTo = function(p){
+	return Math.sqrt((p.x - this.x) * (p.x - this.x) + (p.y - this.y) * (p.y - this.y));	
+};
+
+Vec2.prototype.angleTo = function(p){
+	var deltaY = p.y - this.y;
+	var deltaX = p.x - this.y;
+	return Math.atan2(deltaY, deltaX);
+};
+
+Vec2.prototype.midpoint = function(p, perc) {
+	return new Vec2(this.x+(p.x-this.x)*perc,this.y+(p.y-this.y)*perc);
+}
+
+function median(a,b,perc){
+	return a+(b-a)*perc;
+}
+
+function pointOnCircle(centerX, centerY, radius, radians) { return new Vec2(centerX + radius * Math.cos(radians), centerY + radius * Math.sin(radians)); }
+
+function getPos(obj){
+	return new Vec2(obj.x, obj.y);
+}
+
+function getLableFrameNumber(obj, frame){ return obj.timeline._labels[frame]; };
+
+function randomRange(min, max) { return min + Math.random() * (max - min); };
+function randomInt(min, max) { return Math.floor(min + Math.random() * (max - min + 1)); };
+function clamp(value, min, max) { return Math.min(Math.max(value, Math.min(min, max)), Math.max(min, max)); };
+
+function radsToDegrees(radians) { return radians * (180/Math.PI); };		
+function degreesToRads(degrees) { return degrees * Math.PI / 180; };
+
+function saveProps(obj, v) {
+	// console.log(obj);
+
+	obj.pos = getPos(obj); 
+	obj.sX = obj.x;
+	obj.sY = obj.y;
+	obj.sSKX = obj.skewX;
+	obj.sSKY = obj.skewY;
+	obj.sSX = obj.scaleX;
+	obj.sSY = obj.scaleY;
+	obj.sA = obj.alpha;
+	obj.sR = obj.rotation;
+	obj.visible = v;
+}
+
+function resetProps(obj, v) {
+	obj.x = obj.sX;
+	obj.y = obj.sY;
+	obj.scaleX = obj.sSX;
+	obj.scaleY = obj.sSY;
+	obj.skewX = obj.sSKX;
+	obj.skewY = obj.sSKY;
+	obj.alpha = obj.sA;
+	obj.rotation = obj.sR;
+	obj.visible = v;
+}
+
+function setAs(obj, source) {
+	obj.x = source.x;
+	obj.y = source.y;
+	obj.scaleX = source.scaleX;
+	obj.scaleY = source.scaleY;
+	obj.alpha = source.alpha;
+	obj.rotation = source.rotation;
+}
+
+function saveGuides(prnt, objName, num) {
+
+	prnt[objName].guides = [];
+	for(var nGuide = 0; nGuide < num; nGuide++){
+		var guide = prnt[objName+"_G"+nGuide];
+		prnt[objName].guides.push(guide);
+		saveProps(guide, false);
+	}
+};
+
+function setVis(arr, v) { for(var i = 0; i < arr.length; i++)arr[i].visible = v };
+function saveAllProps(arr, v) { for(var i = 0; i < arr.length; i++)saveProps(arr[i], v); };
+function resetAllProps(arr, v) { for(var i = 0; i < arr.length; i++)resetProps(arr[i], v); };
+function killAllTweens(arr) { for(var i = 0; i < arr.length; i++)TweenLite.killTweensOf(arrObjects[i]); };
+
+function isPervormPreview() {
+	var qVars = window.location.search.substring(1).split("&");
+	for (i = 0; i < qVars.length; i++) {
+		var pair = qVars[i].split("=");
+		if(pair[0] == "preview" && pair[1] == "true"){
+			return true;
+		}
+	}
+	return false;
+}
+
+function isCanvasSupported() {
+	var elem = document.createElement("canvas");
+	return !!(elem.getContext && elem.getContext("2d"));
+}
+function setActive(target, bool){ target.active = bool; }
+function getDepth(target){ return target.parent.getChildIndex(target); };
+function setDepth(target, index){ target.parent.setChildIndex(target, index); }
+
+function swapDepths(source, target){
+	var index = target.parent.getChildIndex(target);
+	target.parent.setChildIndex(source, index); 
+}
+
